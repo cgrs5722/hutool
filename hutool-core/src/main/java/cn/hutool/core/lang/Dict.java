@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -655,7 +656,7 @@ public class Dict extends LinkedHashMap<String, Object> implements BasicTypeGett
 	 */
 	protected String customKey(String key) {
 		if (this.caseInsensitive && null != key) {
-			key = key.toLowerCase();
+			key = key.toLowerCase(Locale.ROOT);
 		}
 		return key;
 	}

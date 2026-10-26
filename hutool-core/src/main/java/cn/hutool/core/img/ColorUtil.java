@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -71,7 +72,7 @@ public class ColorUtil {
 		if (StrUtil.isBlank(colorName)) {
 			return null;
 		}
-		colorName = colorName.toUpperCase();
+		colorName = colorName.toUpperCase(Locale.ROOT);
 
 		if ("BLACK".equals(colorName)) {
 			return Color.BLACK;

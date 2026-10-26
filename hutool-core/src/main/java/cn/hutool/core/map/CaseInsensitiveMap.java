@@ -2,6 +2,7 @@ package cn.hutool.core.map;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -77,7 +78,7 @@ public class CaseInsensitiveMap<K, V> extends FuncKeyMap<K, V> {
 		// issue#I5VRHW@Gitee 使Function可以被序列化
 		super(emptyMapBuilder.build(), (Function<Object, K> & Serializable)(key)->{
 			if (key instanceof CharSequence) {
-				key = key.toString().toLowerCase();
+				key = key.toString().toLowerCase(Locale.ROOT);
 			}
 			//noinspection unchecked
 			return (K) key;

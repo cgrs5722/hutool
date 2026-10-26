@@ -182,7 +182,7 @@ public enum Month {
 		Assert.notBlank(name);
 		Month of = of(ArrayUtil.indexOfIgnoreCase(ALIASES, name));
 		if (null == of) {
-			of = Month.valueOf(name.toUpperCase());
+			of = Month.valueOf(name.toUpperCase(Locale.ROOT));
 		}
 		return of;
 	}
