@@ -17,28 +17,43 @@
 package cn.hutool.v7.swing.img;
 
 import cn.hutool.v7.swing.img.color.ColorUtil;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
+import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ColorUtilTest {
 
 	@Test
 	public void getColorTest(){
 		final Color blue = ColorUtil.getColor("blue");
-		Assertions.assertEquals(Color.BLUE, blue);
+		assertEquals(Color.BLUE, blue);
 	}
 
 	@Test
 	public void toCssRgbTest(){
 		final String s = ColorUtil.toCssRgb(Color.BLUE);
-		Assertions.assertEquals("rgb(0,0,255)", s);
+		assertEquals("rgb(0,0,255)", s);
 	}
 
 	@Test
 	public void toCssRgbaTest(){
 		final String s = ColorUtil.toCssRgba(Color.BLUE);
-		Assertions.assertEquals("rgba(0,0,255,1.0)", s);
+		assertEquals("rgba(0,0,255,1.0)", s);
+	}
+
+	@Test
+	public void getColorByNameTurkishLocaleTest() {
+		final Locale defaultLocale = Locale.getDefault();
+		Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+		try {
+			assertEquals(Color.WHITE, ColorUtil.getColor("white"));
+			assertEquals(Color.PINK, ColorUtil.getColor("pink"));
+			assertEquals(Color.LIGHT_GRAY, ColorUtil.getColor("light_gray"));
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
 	}
 }

@@ -16,9 +16,8 @@
 
 package cn.hutool.v7.core.map;
 
-import cn.hutool.v7.core.lang.builder.GenericBuilder;
 import cn.hutool.v7.core.date.DateTime;
-import cn.hutool.v7.core.map.Dict;
+import cn.hutool.v7.core.lang.builder.GenericBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DictTest {
 	@Test
@@ -37,7 +39,7 @@ public class DictTest {
 				.set("key3", DateTime.now());//Date
 
 		final Long v2 = dict.getLong("key2");
-		Assertions.assertEquals(Long.valueOf(1000L), v2);
+		assertEquals(Long.valueOf(1000L), v2);
 	}
 
 	@Test
@@ -48,8 +50,8 @@ public class DictTest {
 
 		dict.putAll(map);
 
-		Assertions.assertEquals(1, dict.get("A"));
-		Assertions.assertEquals(1, dict.get("a"));
+		assertEquals(1, dict.get("A"));
+		assertEquals(1, dict.get("a"));
 	}
 
 	@Test
@@ -60,9 +62,9 @@ public class DictTest {
 				"BLUE", "#0000FF"
 		);
 
-		Assertions.assertEquals("#FF0000", dict.get("RED"));
-		Assertions.assertEquals("#00FF00", dict.get("GREEN"));
-		Assertions.assertEquals("#0000FF", dict.get("BLUE"));
+		assertEquals("#FF0000", dict.get("RED"));
+		assertEquals("#00FF00", dict.get("GREEN"));
+		assertEquals("#0000FF", dict.get("BLUE"));
 	}
 
 	@Test
@@ -85,11 +87,11 @@ public class DictTest {
 		final User user = GenericBuilder.of(User::new).with(User::setUsername, "hutool").build();
 		final Dict dict = Dict.of();
 		dict.setFields(user::getNickname, user::getUsername);
-		Assertions.assertEquals("hutool", dict.get("username"));
+		assertEquals("hutool", dict.get("username"));
 		Assertions.assertNull(dict.get("nickname"));
 
 		// get by lambda
-		Assertions.assertEquals("hutool", dict.get(User::getUsername));
+		assertEquals("hutool", dict.get(User::getUsername));
 	}
 
 	@Data
@@ -108,7 +110,20 @@ public class DictTest {
 			.set("key3", DateTime.now());//Date
 
 		final Dict dict2 = dict.removeNew("key1");
-		Assertions.assertEquals(3, dict.size());
-		Assertions.assertEquals(2, dict2.size());
+		assertEquals(3, dict.size());
+		assertEquals(2, dict2.size());
+	}
+
+	@Test
+	public void caseInsensitiveTurkishLocaleTest() {
+		final Locale defaultLocale = Locale.getDefault();
+		Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+		try {
+			final Dict dict = new Dict(true);
+			dict.set("ID", 1);
+			assertEquals(Integer.valueOf(1), dict.getInt("id"));
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
 	}
 }
