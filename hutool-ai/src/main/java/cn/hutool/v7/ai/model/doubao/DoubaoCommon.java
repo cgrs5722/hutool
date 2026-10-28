@@ -137,12 +137,12 @@ public class DoubaoCommon {
 		/**
 		 * 帧率，即一秒时间内视频画面数量
 		 */
-		FPS_5("--fps", 24),
+		FPS_24("--fps", 24),
 
 		/**
 		 * 视频分辨率
 		 */
-		RESOLUTION_5("--rs", "720p"),
+		RESOLUTION_720P("--rs", "720p"),
 
 		/**
 		 * 生成视频包含水印

@@ -54,9 +54,9 @@ class GeminiServiceTest {
 	@Test
 	@Disabled
 	void chatStream() {
-		String prompt = "写一个疯狂星期四广告词";
+		final String prompt = "写一个疯狂星期四广告词";
 		// 使用AtomicBoolean作为结束标志
-		AtomicBoolean isDone = new AtomicBoolean(false);
+		final AtomicBoolean isDone = new AtomicBoolean(false);
 
 		geminiService.chat(prompt, data -> {
 			assertNotNull(data);
@@ -77,7 +77,7 @@ class GeminiServiceTest {
 	@Test
 	@Disabled
 	void testUpload() {
-		String uploadFile = geminiService.uploadFile(new File("/Users/hdbuoge/Desktop/111.mov"));
+		final String uploadFile = geminiService.uploadFile(new File("/Users/hdbuoge/Desktop/111.mov"));
 		assertNotNull(uploadFile);
 		//https://generativelanguage.googleapis.com/v1beta/files/a8kkc6263yth
 	}
@@ -97,9 +97,9 @@ class GeminiServiceTest {
 	void chatMultimodalImageSteam() {
 		final GeminiService geminiService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.GEMINI.getValue())
 			.setApiKey(key).setModel(Models.Gemini.GEMINI_2_0_FLASH.getModel()).build(), GeminiService.class);
-		String prompt = "图片上有些什么内容？中文回答";
+		final String prompt = "图片上有些什么内容？中文回答";
 		// 使用AtomicBoolean作为结束标志
-		AtomicBoolean isDone = new AtomicBoolean(false);
+		final AtomicBoolean isDone = new AtomicBoolean(false);
 
 		geminiService.chatMultimodal(prompt,  Arrays.asList("https://generativelanguage.googleapis.com/v1beta/files/a8kkc6263yth"), data -> {
 			assertNotNull(data);
@@ -131,9 +131,9 @@ class GeminiServiceTest {
 	void chatMultimodalVideoStream() {
 		final GeminiService geminiService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.GEMINI.getValue())
 			.setApiKey(key).setModel(Models.Gemini.GEMINI_2_0_FLASH.getModel()).build(), GeminiService.class);
-		String prompt = "视频中第3秒有什么物品？";
+		final String prompt = "视频中第3秒有什么物品？";
 		// 使用AtomicBoolean作为结束标志
-		AtomicBoolean isDone = new AtomicBoolean(false);
+		final AtomicBoolean isDone = new AtomicBoolean(false);
 
 		geminiService.chatMultimodal(prompt,  Arrays.asList("https://generativelanguage.googleapis.com/v1beta/files/k1whwbqznecz"), data -> {
 			assertNotNull(data);
@@ -186,7 +186,7 @@ class GeminiServiceTest {
 	@Test
 	@Disabled
 	void predictImageAndSave() {
-		AIConfig config = new AIConfigBuilder(ModelName.GEMINI.getValue())
+		final AIConfig config = new AIConfigBuilder(ModelName.GEMINI.getValue())
 			.setApiKey(key).setModel(Models.Gemini.IMAGEN_4_0_GENERATE_001.getModel()).build();
 		config.putAdditionalConfigByKey("numberOfImages", GeminiCommon.GeminiImageCount.TWO.getCount());
 		final GeminiService geminiService = AIServiceFactory.getAIService(config, GeminiService.class);
@@ -195,18 +195,18 @@ class GeminiServiceTest {
 		final String response = geminiService.predictImage("A park in the spring next to a lake, the sun sets across the lake, golden hour, red wildflowers");
 
 		//解析JSON 结构
-		JSONObject jsonObject = JSONUtil.parseObj(response);
-		JSONArray predictions = jsonObject.getJSONArray("predictions");
+		final JSONObject jsonObject = JSONUtil.parseObj(response);
+		final JSONArray predictions = jsonObject.getJSONArray("predictions");
 
 		if (predictions != null) {
 			for (int i = 0; i < predictions.size(); i++) {
-				JSONObject item = predictions.getJSONObject(i);
+				final JSONObject item = predictions.getJSONObject(i);
 
 				//提取Base64数据
-				String base64Data = item.getStr("bytesBase64Encoded");
+				final String base64Data = item.getStr("bytesBase64Encoded");
 
 				//划分并保存到本地文件
-				String fileName = "generated_image_" + i + ".png";
+				final String fileName = "generated_image_" + i + ".png";
 				FileUtil.writeBytes(Base64.decode(base64Data), fileName);
 				FileUtil.writeBytes(Base64.decode(base64Data), "your filePath" + fileName);
 
@@ -218,7 +218,7 @@ class GeminiServiceTest {
 	@Test
 	@Disabled
 	void generateVideoTest() {
-		AIConfig config = new AIConfigBuilder(ModelName.GEMINI.getValue())
+		final AIConfig config = new AIConfigBuilder(ModelName.GEMINI.getValue())
 			.setApiKey(key).setModel(Models.Gemini.VEO_3_1_GENERATE_PREVIEW.getModel()).build();
 		config.putAdditionalConfigByKey("aspectRatio", GeminiCommon.GeminiAspectRatio.LANDSCAPE_16_9.getRatio());
 		config.putAdditionalConfigByKey("durationSeconds", GeminiCommon.GeminiDurationSeconds.EIGHT.getValue());
@@ -226,19 +226,19 @@ class GeminiServiceTest {
 
 
 		// 4. 发起异步生成请求
-		String initialRes = geminiService.predictVideo("在一艘即将沉没的轮船上，男主角从后面抱起展开双手的女主角，女主角说：”u jump, i jump“");
-		JSONObject resObj = JSONUtil.parseObj(initialRes);
+		final String initialRes = geminiService.predictVideo("在一艘即将沉没的轮船上，男主角从后面抱起展开双手的女主角，女主角说：”u jump, i jump“");
+		final JSONObject resObj = JSONUtil.parseObj(initialRes);
 
-		String operationName = resObj.getStr("name");
+		final String operationName = resObj.getStr("name");
 
 		// 5. 轮询获取结果 (LRO 模式)
 		String videoUri = null;
-		int maxRetries = 30; // 约等待 5-10 分钟
+		final int maxRetries = 30; // 约等待 5-10 分钟
 		for (int i = 0; i < maxRetries; i++) {
 			ThreadUtil.sleep(20000); // 每 20 秒查询一次
 
-			String statusJson = geminiService.getVideoOperation(operationName);
-			JSONObject statusObj = JSONUtil.parseObj(statusJson);
+			final String statusJson = geminiService.getVideoOperation(operationName);
+			final JSONObject statusObj = JSONUtil.parseObj(statusJson);
 
 			// 判断是否完成
 			if (statusObj.getBool("done", false)) {
@@ -254,27 +254,27 @@ class GeminiServiceTest {
 	@Test
 	@Disabled
 	void downLoadVideo() {
-		String videoUri = "geminiService.getVideoOperation返回的videoUri";
+		final String videoUri = "geminiService.getVideoOperation返回的videoUri";
 		geminiService.downLoadVideo(videoUri, "your filePath");
 	}
 
 	@Test
 	@Disabled
 	void testTTSWithBuildMethod() {
-		AIConfig config = new AIConfigBuilder(ModelName.GEMINI.getValue())
+		final AIConfig config = new AIConfigBuilder(ModelName.GEMINI.getValue())
 			.setApiKey(key).setModel(Models.Gemini.GEMINI_2_5_PRO_PREVIEW_TTS.getModel()).build();
 		config.putAdditionalConfigByKey("temperature", 0.7);
 		final GeminiService geminiService = AIServiceFactory.getAIService(config, GeminiService.class);
 
-		String prompt = "Hello, this is a test of the native text to speech system.";
-		String result = geminiService.textToSpeech(prompt, GeminiCommon.GeminiVoice.AOEDE.getValue());
+		final String prompt = "Hello, this is a test of the native text to speech system.";
+		final String result = geminiService.textToSpeech(prompt, GeminiCommon.GeminiVoice.AOEDE.getValue());
 
-		JSONObject json = JSONUtil.parseObj(result);
-		String base64Data = json.getByPath("candidates[0].content.parts[0].inlineData.data", String.class);
-		byte[] rawPcm = Base64.decode(base64Data);
+		final JSONObject json = JSONUtil.parseObj(result);
+		final String base64Data = json.getByPath("candidates[0].content.parts[0].inlineData.data", String.class);
+		final byte[] rawPcm = Base64.decode(base64Data);
 
 		//接口返回的是裸PCM流
-		byte[] wavFile = geminiService.addWavHeader(rawPcm);
+		final byte[] wavFile = geminiService.addWavHeader(rawPcm);
 
 
 		if (StrUtil.isNotBlank(base64Data)) {

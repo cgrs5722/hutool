@@ -22,6 +22,7 @@ import cn.hutool.v7.ai.core.AIConfig;
 import cn.hutool.v7.ai.core.BaseAIService;
 import cn.hutool.v7.ai.core.Message;
 import cn.hutool.v7.core.codec.binary.Base64;
+import cn.hutool.v7.core.io.IoUtil;
 import cn.hutool.v7.core.io.file.FileUtil;
 import cn.hutool.v7.core.io.resource.FileResource;
 import cn.hutool.v7.core.io.resource.HttpResource;
@@ -161,7 +162,7 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 
 	@Override
 	public String textToSpeech(final String prompt) {
-		final Map<String, Object> paramMap = buildTextToSpeechRequestMap(prompt);
+		final Map<String, Object> paramMap = buildTextToSpeechRequestMap(prompt, null);
 		final Response response = sendPost(getEndpoint(false), JSONUtil.toJsonStr(paramMap));
 		return response.bodyStr();
 	}
@@ -361,7 +362,8 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 							))
 						));
 					} catch (final Exception e) {
-						throw new AIException("Failed to download media from URL: " + media, e.getMessage());
+						// 传入原始异常，保留真实失败原因
+						throw new AIException("Failed to download media from URL: " + media, e);
 					}
 				} else {
 					//Base64 数据
@@ -434,7 +436,14 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 		return paramMap;
 	}
 
-	private Map<String, Object> buildTextToSpeechRequestMap(final String prompt) {
+	/**
+	 * 构建TTS请求体
+	 *
+	 * @param prompt 文本内容
+	 * @param voice  音色，为空时不指定
+	 * @return 请求参数
+	 */
+	private Map<String, Object> buildTextToSpeechRequestMap(final String prompt, String voice) {
 		final Map<String, Object> paramMap = new HashMap<>();
 		final Map<String, Object> part = new HashMap<>();
 		part.put("text", prompt);
@@ -453,6 +462,13 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 		if (MapUtil.isNotEmpty(additionalMap)) {
 			generationConfig.putAll(additionalMap);
 		}
+
+		//单次指定的音色优先级高于config中的默认值
+		if (StrUtil.isNotBlank(voice)) {
+			generationConfig.put("speech_config", MapUtil.of("voice_config",
+				MapUtil.of("prebuilt_voice_config", MapUtil.of("voice_name", voice))));
+		}
+
 		paramMap.put("generation_config", generationConfig);
 		return paramMap;
 	}
@@ -478,7 +494,8 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 				return mimeType;
 			}
 		} catch (final Exception e) {
-			throw new AIException("Failed to get remote file MIME type", e.getMessage());
+			// 传入原始异常，保留真实失败原因
+			throw new AIException("Failed to get remote file MIME type", e);
 		}
 		return "application/octet-stream";
 	}
@@ -550,7 +567,7 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 			}
 
 			// 读取流式响应
-			try (final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			try (final BufferedReader reader = IoUtil.toUtf8Reader(connection.getInputStream())) {
 				String line;
 				while ((line = reader.readLine()) != null) {
 					// 调用回调函数处理每一行数据
@@ -559,6 +576,8 @@ public class GeminiServiceImpl extends BaseAIService implements GeminiService {
 			}
 		} catch (final Exception e) {
 			callback.accept("{\"error\": \"" + e.getMessage() + "\"}");
+			// 不吞异常：流式调用失败必须向上抛出，否则调用方无法感知失败
+			throw new AIException("Failed to read stream response: " + e.getMessage(), e);
 		} finally {
 			// 关闭连接
 			if (connection != null) {

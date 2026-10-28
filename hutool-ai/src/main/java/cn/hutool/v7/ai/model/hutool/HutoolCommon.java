@@ -82,10 +82,10 @@ public class HutoolCommon {
 		DURATION_10("--dur", 10),//文生视频
 
 		//帧率，即一秒时间内视频画面数量
-		FPS_5("--fps", 24),
+		FPS_24("--fps", 24),
 
 		//视频分辨率
-		RESOLUTION_5("--rs", "720p"),
+		RESOLUTION_720P("--rs", "720p"),
 
 		//生成视频是否包含水印
 		WATERMARK_TRUE("--wm", true),
