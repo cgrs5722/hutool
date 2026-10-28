@@ -450,7 +450,7 @@ public class Dict extends CustomKeyMap<String, Object> implements TypeGetter<Str
 	@Override
 	protected String customKey(Object key) {
 		if (this.caseInsensitive && null != key) {
-			key = ((String) key).toLowerCase();
+			key = ((String) key).toLowerCase(Locale.ROOT);
 		}
 		return (String) key;
 	}

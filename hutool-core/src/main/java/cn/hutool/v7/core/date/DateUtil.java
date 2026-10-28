@@ -1992,7 +1992,7 @@ public class DateUtil {
 			case SECONDS -> "s";
 			case MINUTES -> "min";
 			case HOURS -> "h";
-			default -> unit.name().toLowerCase();
+			default -> unit.name().toLowerCase(Locale.ROOT);
 		};
 	}
 

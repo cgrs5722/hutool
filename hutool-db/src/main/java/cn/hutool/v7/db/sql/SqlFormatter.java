@@ -18,10 +18,7 @@ package cn.hutool.v7.db.sql;
 
 import cn.hutool.v7.core.text.StrUtil;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * SQL格式化器 from Hibernate
@@ -118,7 +115,7 @@ public class SqlFormatter {
 
 			while (this.tokens.hasMoreTokens()) {
 				this.token = this.tokens.nextToken();
-				this.lcToken = this.token.toLowerCase();
+				this.lcToken = this.token.toLowerCase(Locale.ROOT);
 
 				switch (this.token) {
 					case "'": {

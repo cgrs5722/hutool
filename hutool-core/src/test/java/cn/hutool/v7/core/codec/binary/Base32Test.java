@@ -20,6 +20,8 @@ import cn.hutool.v7.core.util.ByteUtil;
 import cn.hutool.v7.core.util.RandomUtil;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,7 +37,7 @@ public class Base32Test {
 		assertEquals(a, decodeStr);
 
 		// 支持小写模式解码
-		decodeStr = Base32.decodeStr(encode.toLowerCase());
+		decodeStr = Base32.decodeStr(encode.toLowerCase(Locale.ROOT));
 		assertEquals(a, decodeStr);
 	}
 
@@ -49,7 +51,7 @@ public class Base32Test {
 		assertEquals(a, decodeStr);
 
 		// 支持小写模式解码
-		decodeStr = Base32.decodeStrHex(encode.toLowerCase());
+		decodeStr = Base32.decodeStrHex(encode.toLowerCase(Locale.ROOT));
 		assertEquals(a, decodeStr);
 	}
 

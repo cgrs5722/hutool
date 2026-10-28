@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.Locale;
 import java.util.function.Function;
 
 /**
@@ -189,7 +190,7 @@ public class CompressUtil {
 		}
 
 		if (StrUtil.isBlank(archiverName)) {
-			final String name = file.getName().toLowerCase();
+			final String name = file.getName().toLowerCase(Locale.ROOT);
 			if (name.endsWith(".tgz")) {
 				archiverName = "tgz";
 			} else if (name.endsWith(".tar.gz")) {

@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * 服务端请求对象，用于获取请求参数等
@@ -200,7 +201,7 @@ public interface ServerRequest {
 		if (StrUtil.isBlank(contentType)) {
 			return false;
 		}
-		return contentType.toLowerCase().startsWith("multipart/");
+		return contentType.toLowerCase(Locale.ROOT).startsWith("multipart/");
 	}
 	// endregion
 

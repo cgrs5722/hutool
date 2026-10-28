@@ -23,6 +23,7 @@ import cn.hutool.v7.json.JSONUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
 import java.util.stream.Stream;
 
 /**
@@ -54,7 +55,7 @@ public class IssueI49VZBTest {
 
 
 		public static NBCloudKeyType downFind(final String keyType) {
-			if (fingerPrint.name().equals(keyType.toLowerCase())) {
+			if (fingerPrint.name().equals(keyType.toLowerCase(Locale.ROOT))) {
 				return NBCloudKeyType.fingerPrint;
 			} else {
 				return find(keyType);
@@ -62,7 +63,7 @@ public class IssueI49VZBTest {
 		}
 
 		public String getValue() {
-			return super.toString().toLowerCase();
+			return super.toString().toLowerCase(Locale.ROOT);
 		}
 
 	}

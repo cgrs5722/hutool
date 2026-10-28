@@ -29,10 +29,7 @@ import cn.hutool.v7.core.util.RandomUtil;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 颜色工具类
@@ -153,7 +150,7 @@ public class ColorUtil {
 		if (StrUtil.isBlank(colorName)) {
 			return null;
 		}
-		colorName = colorName.toUpperCase();
+		colorName = colorName.toUpperCase(Locale.ROOT);
 
 		// 预定义颜色别名
 		final Color color = COLOR_MAPPING.get(colorName);

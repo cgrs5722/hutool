@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Locale;
 
 public class MetroHash128Test {
 	@Test
@@ -129,11 +130,11 @@ public class MetroHash128Test {
 	}
 
 	private static String hex(final long value){
-		return HexUtil.toHex(value).toUpperCase();
+		return HexUtil.toHex(value).toUpperCase(Locale.ROOT);
 	}
 
 	private static String hex(final byte[] bytes){
-		return HexUtil.encodeStr(bytes).toUpperCase();
+		return HexUtil.encodeStr(bytes).toUpperCase(Locale.ROOT);
 	}
 
 	@Test

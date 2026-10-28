@@ -20,6 +20,7 @@ import cn.hutool.v7.core.text.StrUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -138,7 +139,7 @@ public class RichTextMaskingProcessor {
 					}
 
 					if (tagNameEnd > tagNameStart) {
-						currentTag = html.substring(tagNameStart, tagNameEnd).toLowerCase();
+						currentTag = html.substring(tagNameStart, tagNameEnd).toLowerCase(Locale.ROOT);
 					}
 				}
 			} else if (c == '>' && inTag) {

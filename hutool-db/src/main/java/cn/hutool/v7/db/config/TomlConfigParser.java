@@ -30,6 +30,7 @@ import cn.hutool.v7.log.level.Level;
 import cn.hutool.v7.setting.toml.TomlReader;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -205,7 +206,7 @@ public class TomlConfigParser implements ConfigParser {
 
 		String sqlLevelStr = getAndRemoveString(data, DSKeys.KEY_SQL_LEVEL);
 		if (sqlLevelStr != null) {
-			sqlLevelStr = sqlLevelStr.toUpperCase();
+			sqlLevelStr = sqlLevelStr.toUpperCase(Locale.ROOT);
 		}
 		final Level level = ConvertUtil.toEnum(Level.class, sqlLevelStr, Level.DEBUG);
 

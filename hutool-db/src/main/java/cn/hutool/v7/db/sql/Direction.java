@@ -18,6 +18,8 @@ package cn.hutool.v7.db.sql;
 
 import cn.hutool.v7.core.text.StrUtil;
 
+import java.util.Locale;
+
 /**
  * 排序方式（升序或者降序）
  *
@@ -55,7 +57,7 @@ public enum Direction {
 		}
 
 		try {
-			return Direction.valueOf(value.toUpperCase());
+			return Direction.valueOf(value.toUpperCase(Locale.ROOT));
 		} catch (final Exception e) {
 			throw new IllegalArgumentException(StrUtil.format(
 					"Invalid value [{}] for orders given!Has to be either 'desc' or 'asc' (case insensitive).", value), e);

@@ -28,6 +28,7 @@ import cn.hutool.v7.db.sql.filter.SqlLogFilter;
 import cn.hutool.v7.log.level.Level;
 import cn.hutool.v7.setting.Setting;
 
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -187,7 +188,7 @@ public class SettingConfigParser implements ConfigParser {
 		final boolean isShowParams = ConvertUtil.toBoolean(setting.remove(DSKeys.KEY_SHOW_PARAMS), false);
 		String sqlLevelStr = setting.remove(DSKeys.KEY_SQL_LEVEL);
 		if (null != sqlLevelStr) {
-			sqlLevelStr = sqlLevelStr.toUpperCase();
+			sqlLevelStr = sqlLevelStr.toUpperCase(Locale.ROOT);
 		}
 		final Level level = ConvertUtil.toEnum(Level.class, sqlLevelStr, Level.DEBUG);
 

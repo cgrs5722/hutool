@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -225,8 +226,8 @@ public class ValidatorTest {
 		assertTrue(Validator.isUUID(IdUtil.randomUUID()));
 		assertTrue(Validator.isUUID(IdUtil.fastSimpleUUID()));
 
-		assertTrue(Validator.isUUID(IdUtil.randomUUID().toUpperCase()));
-		assertTrue(Validator.isUUID(IdUtil.fastSimpleUUID().toUpperCase()));
+		assertTrue(Validator.isUUID(IdUtil.randomUUID().toUpperCase(Locale.ROOT)));
+		assertTrue(Validator.isUUID(IdUtil.fastSimpleUUID().toUpperCase(Locale.ROOT)));
 	}
 
 	@Test

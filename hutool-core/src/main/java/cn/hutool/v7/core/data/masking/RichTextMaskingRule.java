@@ -17,6 +17,7 @@
 package cn.hutool.v7.core.data.masking;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -325,7 +326,7 @@ public class RichTextMaskingRule {
 	 * @return this
 	 */
 	public RichTextMaskingRule addExcludeTag(final String tag) {
-		this.excludeTags.add(tag.toLowerCase());
+		this.excludeTags.add(tag.toLowerCase(Locale.ROOT));
 		return this;
 	}
 
@@ -356,7 +357,7 @@ public class RichTextMaskingRule {
 	 * @return this
 	 */
 	public RichTextMaskingRule addIncludeTag(final String tag) {
-		this.includeTags.add(tag.toLowerCase());
+		this.includeTags.add(tag.toLowerCase(Locale.ROOT));
 		return this;
 	}
 }

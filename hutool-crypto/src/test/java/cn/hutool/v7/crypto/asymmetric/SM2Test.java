@@ -16,29 +16,29 @@
 
 package cn.hutool.v7.crypto.asymmetric;
 
-import cn.hutool.v7.core.codec.binary.HexUtil;
 import cn.hutool.v7.core.codec.binary.Base64;
+import cn.hutool.v7.core.codec.binary.HexUtil;
 import cn.hutool.v7.core.text.StrUtil;
 import cn.hutool.v7.core.util.ByteUtil;
 import cn.hutool.v7.core.util.CharsetUtil;
-import cn.hutool.v7.crypto.bc.ECKeyUtil;
 import cn.hutool.v7.crypto.KeyUtil;
 import cn.hutool.v7.crypto.SecureUtil;
+import cn.hutool.v7.crypto.bc.ECKeyUtil;
 import cn.hutool.v7.crypto.bc.SM2Constant;
 import cn.hutool.v7.crypto.bc.SmUtil;
 import org.bouncycastle.crypto.engines.SM2Engine;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.jcajce.spec.OpenSSHPrivateKeySpec;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Locale;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * SM2算法单元测试
@@ -50,8 +50,8 @@ public class SM2Test {
 	@Test
 	public void generateKeyPairTest() {
 		final KeyPair pair = KeyUtil.generateKeyPair("SM2");
-		Assertions.assertNotNull(pair.getPrivate());
-		Assertions.assertNotNull(pair.getPublic());
+		assertNotNull(pair.getPrivate());
+		assertNotNull(pair.getPublic());
 
 		new SM2(pair.getPrivate(), pair.getPublic());
 	}
@@ -61,8 +61,8 @@ public class SM2Test {
 		// OBJECT IDENTIFIER 1.2.156.10197.1.301
 		final String OID = "06082A811CCF5501822D";
 		final KeyPair pair = KeyUtil.generateKeyPair("SM2");
-		Assertions.assertTrue(HexUtil.encodeStr(pair.getPrivate().getEncoded()).toUpperCase().contains(OID));
-		Assertions.assertTrue(HexUtil.encodeStr(pair.getPublic().getEncoded()).toUpperCase().contains(OID));
+		assertTrue(HexUtil.encodeStr(pair.getPrivate().getEncoded()).toUpperCase(Locale.ROOT).contains(OID));
+		assertTrue(HexUtil.encodeStr(pair.getPublic().getEncoded()).toUpperCase(Locale.ROOT).contains(OID));
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class SM2Test {
 		// 公钥加密，私钥解密
 		final byte[] encrypt = sm2.encrypt(ByteUtil.toBytes("我是一段测试aaaa", CharsetUtil.UTF_8), KeyType.PublicKey);
 		final byte[] decrypt = sm2.decrypt(encrypt, KeyType.PrivateKey);
-		Assertions.assertEquals("我是一段测试aaaa", StrUtil.str(decrypt, CharsetUtil.UTF_8));
+		assertEquals("我是一段测试aaaa", StrUtil.str(decrypt, CharsetUtil.UTF_8));
 	}
 
 	@Test
@@ -85,15 +85,15 @@ public class SM2Test {
 		final SM2 sm2 = SmUtil.sm2();
 
 		// 获取私钥和公钥
-		Assertions.assertNotNull(sm2.getPrivateKey());
-		Assertions.assertNotNull(sm2.getPrivateKeyBase64());
-		Assertions.assertNotNull(sm2.getPublicKey());
-		Assertions.assertNotNull(sm2.getPrivateKeyBase64());
+		assertNotNull(sm2.getPrivateKey());
+		assertNotNull(sm2.getPrivateKeyBase64());
+		assertNotNull(sm2.getPublicKey());
+		assertNotNull(sm2.getPrivateKeyBase64());
 
 		// 公钥加密，私钥解密
 		final byte[] encrypt = sm2.encrypt(ByteUtil.toBytes("我是一段测试aaaa", CharsetUtil.UTF_8), KeyType.PublicKey);
 		final byte[] decrypt = sm2.decrypt(encrypt, KeyType.PrivateKey);
-		Assertions.assertEquals("我是一段测试aaaa", StrUtil.str(decrypt, CharsetUtil.UTF_8));
+		assertEquals("我是一段测试aaaa", StrUtil.str(decrypt, CharsetUtil.UTF_8));
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class SM2Test {
 		// 公钥加密，私钥解密
 		final String encryptStr = sm2.encryptBase64(text.toString(), KeyType.PublicKey);
 		final String decryptStr = StrUtil.utf8Str(sm2.decrypt(encryptStr, KeyType.PrivateKey));
-		Assertions.assertEquals(text.toString(), decryptStr);
+		assertEquals(text.toString(), decryptStr);
 
 		// 测试自定义密钥后是否生效
 		final PrivateKey privateKey = sm2.getPrivateKey();
@@ -117,7 +117,7 @@ public class SM2Test {
 		sm2.setPrivateKey(privateKey);
 		sm2.setPublicKey(publicKey);
 		final String decryptStr2 = StrUtil.utf8Str(sm2.decrypt(encryptStr, KeyType.PrivateKey));
-		Assertions.assertEquals(text.toString(), decryptStr2);
+		assertEquals(text.toString(), decryptStr2);
 	}
 
 	@Test
@@ -131,7 +131,7 @@ public class SM2Test {
 		sm2.usePlainEncoding();
 		final byte[] sign = sm2.sign(dataBytes, null);
 		// 64位签名
-		Assertions.assertEquals(64, sign.length);
+		assertEquals(64, sign.length);
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class SM2Test {
 		sm2.usePlainEncoding();
 
 		final boolean verify = sm2.verify(dataBytes, HexUtil.decode(signHex));
-		Assertions.assertTrue(verify);
+		assertTrue(verify);
 	}
 
 	@Test
@@ -158,7 +158,7 @@ public class SM2Test {
 
 		final byte[] sign = sm2.sign(ByteUtil.toUtf8Bytes(content));
 		final boolean verify = sm2.verify(ByteUtil.toUtf8Bytes(content), sign);
-		Assertions.assertTrue(verify);
+		assertTrue(verify);
 	}
 
 	@Test
@@ -169,7 +169,7 @@ public class SM2Test {
 
 		final String sign = sm2.signHex(content.getBytes(StandardCharsets.UTF_8));
 		final boolean verify = sm2.verifyHex(HexUtil.encodeStr(content), sign);
-		Assertions.assertTrue(verify);
+		assertTrue(verify);
 	}
 
 	@Test
@@ -182,7 +182,7 @@ public class SM2Test {
 
 		final byte[] sign = sm2.sign(content.getBytes(StandardCharsets.UTF_8));
 		final boolean verify = sm2.verify(content.getBytes(StandardCharsets.UTF_8), sign);
-		Assertions.assertTrue(verify);
+		assertTrue(verify);
 	}
 
 	@Test
@@ -198,7 +198,7 @@ public class SM2Test {
 
 		final byte[] sign = sm2.sign(content.getBytes(StandardCharsets.UTF_8));
 		final boolean verify = sm2.verify(content.getBytes(StandardCharsets.UTF_8), sign);
-		Assertions.assertTrue(verify);
+		assertTrue(verify);
 	}
 
 	@Test
@@ -210,8 +210,8 @@ public class SM2Test {
 		final String encodeB64 = Base64.encode(data);
 		final PublicKey Hexdecode = KeyUtil.decodeECPublicKey(encodeHex, SM2Constant.SM2_CURVE_NAME);
 		final PublicKey B64decode = KeyUtil.decodeECPublicKey(encodeB64, SM2Constant.SM2_CURVE_NAME);
-		Assertions.assertEquals(HexUtil.encodeStr(publicKey.getEncoded()), HexUtil.encodeStr(Hexdecode.getEncoded()));
-		Assertions.assertEquals(HexUtil.encodeStr(publicKey.getEncoded()), HexUtil.encodeStr(B64decode.getEncoded()));
+		assertEquals(HexUtil.encodeStr(publicKey.getEncoded()), HexUtil.encodeStr(Hexdecode.getEncoded()));
+		assertEquals(HexUtil.encodeStr(publicKey.getEncoded()), HexUtil.encodeStr(B64decode.getEncoded()));
 	}
 
 	@Test
@@ -225,7 +225,7 @@ public class SM2Test {
 
 		final SM2 sm2 = new SM2(d, x, y);
 		final String sign = sm2.signHexFromHex(data, id);
-		Assertions.assertTrue(sm2.verifyHex(data, sign));
+		assertTrue(sm2.verifyHex(data, sign));
 	}
 
 	@Test
@@ -245,10 +245,10 @@ public class SM2Test {
 
 
 		final String sign = "DCA0E80A7F46C93714B51C3EFC55A922BCEF7ECF0FE9E62B53BA6A7438B543A76C145A452CA9036F3CB70D7E6C67D4D9D7FE114E5367A2F6F5A4D39F2B10F3D6";
-		Assertions.assertTrue(sm2.verifyHex(data, sign));
+		assertTrue(sm2.verifyHex(data, sign));
 
 		final String sign2 = sm2.signHexFromHex(data, id);
-		Assertions.assertTrue(sm2.verifyHex(data, sign2));
+		assertTrue(sm2.verifyHex(data, sign2));
 	}
 
 	@Test
@@ -263,7 +263,7 @@ public class SM2Test {
 		final String encryptHex = sm2.encryptHex(data, KeyType.PublicKey);
 		final String decryptStr = sm2.decryptStr(encryptHex, KeyType.PrivateKey);
 
-		Assertions.assertEquals(data, decryptStr);
+		assertEquals(data, decryptStr);
 	}
 
 	@Test
@@ -274,10 +274,10 @@ public class SM2Test {
 		final byte[] data = sm2.encrypt(src, KeyType.PublicKey);
 		final byte[] sign =  sm2.sign(src.getBytes(StandardCharsets.UTF_8));
 
-		Assertions.assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
+		assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
 
 		final byte[] dec =  sm2.decrypt(data, KeyType.PrivateKey);
-		Assertions.assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
+		assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Test
@@ -296,10 +296,10 @@ public class SM2Test {
 		final byte[] data = sm2.encrypt(src, KeyType.PublicKey);
 		final byte[] sign =  sm2.sign(src.getBytes(StandardCharsets.UTF_8));
 
-		Assertions.assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
+		assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
 
 		final byte[] dec =  sm2.decrypt(data, KeyType.PrivateKey);
-		Assertions.assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
+		assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Test
@@ -314,20 +314,20 @@ public class SM2Test {
 		final byte[] data = sm2.encrypt(src, KeyType.PublicKey);
 		final byte[] sign =  sm2.sign(src.getBytes(StandardCharsets.UTF_8));
 
-		Assertions.assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
+		assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
 
 		final byte[] dec =  sm2.decrypt(data, KeyType.PrivateKey);
-		Assertions.assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
+		assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Test
 	public void dLengthTest(){
 		final SM2 sm2 = SmUtil.sm2();
-		Assertions.assertEquals(64, sm2.getDHex().length());
-		Assertions.assertEquals(32, sm2.getD().length);
+		assertEquals(64, sm2.getDHex().length());
+		assertEquals(32, sm2.getD().length);
 
 		// 04占位一个字节
-		Assertions.assertEquals(65, sm2.getQ(false).length);
+		assertEquals(65, sm2.getQ(false).length);
 	}
 
 	@Test
@@ -337,8 +337,8 @@ public class SM2Test {
 		final String q = "04" + x + y;
 		final SM2 sm1 = new SM2(null, x, y);
 		final SM2 sm2 = new SM2(null, q);
-		Assertions.assertNotNull(sm1);
-		Assertions.assertNotNull(sm2);
+		assertNotNull(sm1);
+		assertNotNull(sm2);
 	}
 
 	@Test

@@ -29,6 +29,7 @@ import java.awt.Image;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * 二维码设置
@@ -477,7 +478,7 @@ public class QrConfig {
 		// 只有不禁用（即开启）ECI编码功能，才使用自定义的字符编码
 		// 二维码内容就是英文字符，建议不设置编码，没有任何问题；对于中文来说，会乱码
 		if (null != this.charset) {
-			hints.put(EncodeHintType.CHARACTER_SET, charset.toString().toLowerCase());
+			hints.put(EncodeHintType.CHARACTER_SET, charset.toString().toLowerCase(Locale.ROOT));
 		}
 		if (null != this.errorCorrection) {
 			final Object value;

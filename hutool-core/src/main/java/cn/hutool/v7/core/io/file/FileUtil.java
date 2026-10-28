@@ -1653,7 +1653,7 @@ public class FileUtil {
 	 * @return 是否有指定后缀
 	 */
 	public static boolean pathEndsWith(final File file, final String suffix) {
-		return file.getPath().toLowerCase().endsWith(suffix);
+		return file.getPath().toLowerCase(Locale.ROOT).endsWith(suffix);
 	}
 
 	/**

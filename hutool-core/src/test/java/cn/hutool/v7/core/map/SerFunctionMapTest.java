@@ -16,23 +16,25 @@
 
 package cn.hutool.v7.core.map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SerFunctionMapTest {
 
 	@Test
 	public void putGetTest(){
 		final FuncMap<Object, Object> map = new FuncMap<>(HashMap::new,
-				(key)->key.toString().toLowerCase(),
-				(value)->value.toString().toUpperCase());
+				(key)->key.toString().toLowerCase(Locale.ROOT),
+				(value)->value.toString().toUpperCase(Locale.ROOT));
 
 		map.put("aaa", "b");
 		map.put("BBB", "c");
 
-		Assertions.assertEquals("B", map.get("aaa"));
-		Assertions.assertEquals("C", map.get("bbb"));
+		assertEquals("B", map.get("aaa"));
+		assertEquals("C", map.get("bbb"));
 	}
 }

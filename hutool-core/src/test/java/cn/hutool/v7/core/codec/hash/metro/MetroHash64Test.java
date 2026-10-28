@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Locale;
 
 /**
  * 来自：https://github.com/postamar/java-metrohash/blob/master/src/test/java/util/hash/MetroHashTest64.java
@@ -125,10 +126,10 @@ public class MetroHash64Test {
 	}
 
 	private String h64(final String value) {
-		return HexUtil.toHex(MetroHash64.of(0).hash64(ByteUtil.toUtf8Bytes(value))).toUpperCase();
+		return HexUtil.toHex(MetroHash64.of(0).hash64(ByteUtil.toUtf8Bytes(value))).toUpperCase(Locale.ROOT);
 	}
 
 	private static String hex(final byte[] bytes){
-		return HexUtil.encodeStr(bytes).toUpperCase();
+		return HexUtil.encodeStr(bytes).toUpperCase(Locale.ROOT);
 	}
 }

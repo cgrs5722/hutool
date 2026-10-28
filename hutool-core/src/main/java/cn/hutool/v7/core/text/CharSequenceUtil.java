@@ -3698,7 +3698,7 @@ public class CharSequenceUtil extends StrValidator {
 	 * @since 5.8.38
 	 */
 	public static String toLowerCase(final CharSequence str) {
-		return toLowerCase(str, Locale.getDefault());
+		return toLowerCase(str, Locale.ROOT);
 	}
 
 	/**
@@ -3729,7 +3729,7 @@ public class CharSequenceUtil extends StrValidator {
 	 * @since 5.8.38
 	 */
 	public static String toUpperCase(final CharSequence str) {
-		return toUpperCase(str, Locale.getDefault());
+		return toUpperCase(str, Locale.ROOT);
 	}
 
 	/**
@@ -3748,7 +3748,7 @@ public class CharSequenceUtil extends StrValidator {
 		if (str.isEmpty()) {
 			return EMPTY;
 		}
-		return str.toString().toUpperCase();
+		return str.toString().toUpperCase(locale);
 	}
 
 	/**

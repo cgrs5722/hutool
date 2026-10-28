@@ -27,10 +27,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.InitialDirContext;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * JNDI工具类<br>
@@ -159,9 +156,9 @@ public class JNDIUtil {
 			? Arrays.asList(allowedProtocols)
 			: SAFE_PROTOCOLS;
 
-		final String lowerUrl = url.toLowerCase();
+		final String lowerUrl = url.toLowerCase(Locale.ROOT);
 		for (final String protocol : protocols) {
-			if (lowerUrl.startsWith(protocol.toLowerCase())) {
+			if (lowerUrl.startsWith(protocol.toLowerCase(Locale.ROOT))) {
 				return true;
 			}
 		}

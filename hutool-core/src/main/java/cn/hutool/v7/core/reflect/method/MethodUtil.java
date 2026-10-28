@@ -33,6 +33,7 @@ import cn.hutool.v7.core.text.StrUtil;
 import cn.hutool.v7.core.util.BooleanUtil;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -499,7 +500,7 @@ public class MethodUtil {
 		}
 
 		if (ignoreCase) {
-			name = name.toLowerCase();
+			name = name.toLowerCase(Locale.ROOT);
 		}
 		return name.startsWith(MethodNameUtil.SET_PREFIX);
 	}
@@ -539,7 +540,7 @@ public class MethodUtil {
 		}
 
 		if (ignoreCase) {
-			name = name.toLowerCase();
+			name = name.toLowerCase(Locale.ROOT);
 		}
 
 		if (name.startsWith(MethodNameUtil.IS_PREFIX)) {

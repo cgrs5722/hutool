@@ -84,7 +84,7 @@ public class MapUtilTest {
 			.put(2, "happily")
 			.build();
 
-		final Map<Integer, String> resultMap = MapUtil.map(adjectivesMap, (k, v) -> v + " " + PeopleEnum.values()[k].name().toLowerCase());
+		final Map<Integer, String> resultMap = MapUtil.map(adjectivesMap, (k, v) -> v + " " + PeopleEnum.values()[k].name().toLowerCase(Locale.ROOT));
 
 		Assertions.assertEquals("lovely girl", resultMap.get(0));
 		Assertions.assertEquals("friendly boy", resultMap.get(1));

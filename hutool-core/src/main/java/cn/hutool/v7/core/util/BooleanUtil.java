@@ -21,6 +21,7 @@ import cn.hutool.v7.core.collection.set.SetUtil;
 import cn.hutool.v7.core.text.StrUtil;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -100,7 +101,7 @@ public class BooleanUtil {
 	 */
 	public static boolean toBoolean(final String valueStr) {
 		if (StrUtil.isNotBlank(valueStr)) {
-			return TRUE_SET.contains(valueStr.trim().toLowerCase());
+			return TRUE_SET.contains(valueStr.trim().toLowerCase(Locale.ROOT));
 		}
 		return false;
 	}
@@ -117,7 +118,7 @@ public class BooleanUtil {
 	 */
 	public static Boolean toBooleanObject(String valueStr) {
 		if (StrUtil.isNotBlank(valueStr)) {
-			valueStr = valueStr.trim().toLowerCase();
+			valueStr = valueStr.trim().toLowerCase(Locale.ROOT);
 			if (TRUE_SET.contains(valueStr)) {
 				return Boolean.TRUE;
 			} else if (FALSE_SET.contains(valueStr)) {

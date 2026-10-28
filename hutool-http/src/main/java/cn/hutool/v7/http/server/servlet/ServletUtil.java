@@ -382,7 +382,7 @@ public class ServletUtil {
 	public static boolean isIE(final HttpServletRequest request) {
 		String userAgent = getHeaderIgnoreCase(request, "User-Agent");
 		if (StrUtil.isNotBlank(userAgent)) {
-			userAgent = userAgent.toUpperCase();
+			userAgent = userAgent.toUpperCase(Locale.ROOT);
 			return userAgent.contains("MSIE") || userAgent.contains("TRIDENT");
 		}
 		return false;
@@ -423,7 +423,7 @@ public class ServletUtil {
 		if (StrUtil.isBlank(contentType)) {
 			return false;
 		}
-		return contentType.toLowerCase().startsWith("multipart/");
+		return contentType.toLowerCase(Locale.ROOT).startsWith("multipart/");
 	}
 	// --------------------------------------------------------- Header end
 

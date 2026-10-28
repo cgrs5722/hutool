@@ -22,6 +22,7 @@ import cn.hutool.v7.crypto.asymmetric.SignAlgorithm;
 import cn.hutool.v7.crypto.digest.mac.HmacAlgorithm;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * 算法工具类，算法和JWT算法ID对应表
@@ -89,7 +90,7 @@ public class AlgorithmUtil {
 	 * @return 算法
 	 */
 	private static String getAlgorithmById(final String id) {
-		return map.get(id.toUpperCase());
+		return map.get(id.toUpperCase(Locale.ROOT));
 	}
 
 	/**

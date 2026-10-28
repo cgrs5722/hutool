@@ -26,6 +26,8 @@ import cn.hutool.v7.core.util.RandomUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -113,7 +115,7 @@ public class MetroHashTest {
 	}
 
 	private String h64(final String value) {
-		return HexUtil.toHex(MetroHash64.of(0).hash64(ByteUtil.toUtf8Bytes(value))).toUpperCase();
+		return HexUtil.toHex(MetroHash64.of(0).hash64(ByteUtil.toUtf8Bytes(value))).toUpperCase(Locale.ROOT);
 	}
 
 	/**

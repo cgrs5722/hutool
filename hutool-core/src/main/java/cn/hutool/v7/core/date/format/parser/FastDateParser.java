@@ -716,7 +716,7 @@ public class FastDateParser extends SimpleDateBasic implements PositionDateParse
 				final TimeZone tz = ZoneUtil.getTimeZone("GMT" + value);
 				cal.setTimeZone(tz);
 			} else if (value.regionMatches(true, 0, "GMT", 0, 3)) {
-				final TimeZone tz = ZoneUtil.getTimeZone(value.toUpperCase());
+				final TimeZone tz = ZoneUtil.getTimeZone(value.toUpperCase(Locale.ROOT));
 				cal.setTimeZone(tz);
 			} else {
 				final TzInfo tzInfo = tzNames.get(value.toLowerCase(locale));

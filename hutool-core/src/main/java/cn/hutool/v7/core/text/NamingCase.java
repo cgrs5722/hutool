@@ -16,6 +16,8 @@
 
 package cn.hutool.v7.core.text;
 
+import java.util.Locale;
+
 /**
  * 命名规则封装，主要是针对驼峰风格命名、连接符命名等的封装
  *
@@ -217,7 +219,7 @@ public class NamingCase {
 		} else {
 			if(otherCharToLower){
 				if(StrUtil.isUpperCase(name2)){
-					return name2.toLowerCase();
+					return name2.toLowerCase(Locale.ROOT);
 				}
 				return StrUtil.lowerFirst(name2);
 			}

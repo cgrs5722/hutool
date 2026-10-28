@@ -23,6 +23,7 @@ import cn.hutool.v7.db.ds.DSUtil;
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 数据访问层模板<br>
@@ -331,7 +332,7 @@ public class DaoTemplate {
 	 * @throws DbException SQL执行异常
 	 */
 	public List<Entity> findBySql(String sql, final Object... params) throws DbException {
-		final String selectKeyword = StrUtil.subPre(sql.trim(), 6).toLowerCase();
+		final String selectKeyword = StrUtil.subPre(sql.trim(), 6).toLowerCase(Locale.ROOT);
 		if (!"select".equals(selectKeyword)) {
 			sql = "SELECT * FROM " + this.tableName + " " + sql;
 		}

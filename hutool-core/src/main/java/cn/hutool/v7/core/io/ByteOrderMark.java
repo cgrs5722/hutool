@@ -23,6 +23,7 @@ import cn.hutool.v7.core.util.CharsetUtil;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.function.Predicate;
 
 /**
@@ -194,7 +195,7 @@ public record ByteOrderMark(String charsetName,
 				builder.append(",");
 			}
 			builder.append("0x");
-			builder.append(Integer.toHexString(0xFF & bytes[i]).toUpperCase());
+			builder.append(Integer.toHexString(0xFF & bytes[i]).toUpperCase(Locale.ROOT));
 		}
 		builder.append(']');
 		return builder.toString();

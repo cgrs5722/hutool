@@ -727,7 +727,7 @@ public class RandomUtil {
 	 * @since 4.0.13
 	 */
 	public static String randomLettersAndNumbersUpper(final int length) {
-		return randomString(LETTERS_NUMBERS_LOWER_CHARS, length).toUpperCase();
+		return randomString(LETTERS_NUMBERS_LOWER_CHARS, length).toUpperCase(Locale.ROOT);
 	}
 
 	/**
@@ -756,7 +756,7 @@ public class RandomUtil {
 	public static String randomLettersAndNumbersLowerWithoutStr(final int length, final String elemData) {
 		char[] baseChars = LETTERS_NUMBERS_LOWER_CHARS;
 		if (StrUtil.isNotBlank(elemData)) {
-			baseChars = ArrayUtil.removeElements(baseChars, elemData.toLowerCase().toCharArray());
+			baseChars = ArrayUtil.removeElements(baseChars, elemData.toLowerCase(Locale.ROOT).toCharArray());
 		}
 		return randomString(baseChars, length);
 	}

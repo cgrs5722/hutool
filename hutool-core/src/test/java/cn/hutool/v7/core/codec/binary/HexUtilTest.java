@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.Color;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -260,7 +261,7 @@ public class HexUtilTest {
 	public void decodeTest(){
 		final String str = "e8c670380cb220095268f40221fc748fa6ac39d6e930e63c30da68bad97f885d";
 		Assertions.assertArrayEquals(HexUtil.decode(str),
-			HexUtil.decode(str.toUpperCase()));
+			HexUtil.decode(str.toUpperCase(Locale.ROOT)));
 	}
 
 	@Test

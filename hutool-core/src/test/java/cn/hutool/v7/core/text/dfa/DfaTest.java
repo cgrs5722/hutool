@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -136,7 +137,7 @@ public class DfaTest {
 	public void aTest() {
 		final WordTree tree = new WordTree();
 		tree.addWord("women");
-		final String text = "a WOMEN todo.".toLowerCase();
+		final String text = "a WOMEN todo.".toLowerCase(Locale.ROOT);
 		final List<String> matchAll = tree.matchAll(text, -1, false, false);
 		assertEquals("[women]", matchAll.toString());
 	}

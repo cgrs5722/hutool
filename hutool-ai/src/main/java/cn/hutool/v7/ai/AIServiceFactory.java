@@ -22,6 +22,7 @@ import cn.hutool.v7.ai.core.AIServiceProvider;
 import cn.hutool.v7.core.spi.ServiceLoader;
 import cn.hutool.v7.core.spi.SpiUtil;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,7 +40,7 @@ public class AIServiceFactory {
 	static {
 		final ServiceLoader<AIServiceProvider> loader = SpiUtil.loadList(AIServiceProvider.class);
 		for (final AIServiceProvider provider : loader) {
-			providers.put(provider.getServiceName().toLowerCase(), provider);
+			providers.put(provider.getServiceName().toLowerCase(Locale.ROOT), provider);
 		}
 	}
 
@@ -65,7 +66,7 @@ public class AIServiceFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends AIService> T getAIService(final AIConfig config, final Class<T> clazz) {
-		final AIServiceProvider provider = providers.get(config.getModelName().toLowerCase());
+		final AIServiceProvider provider = providers.get(config.getModelName().toLowerCase(Locale.ROOT));
 		if (provider == null) {
 			throw new IllegalArgumentException("Unsupported model: " + config.getModelName());
 		}

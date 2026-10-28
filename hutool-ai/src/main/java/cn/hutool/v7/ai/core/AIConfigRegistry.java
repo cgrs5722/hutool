@@ -19,6 +19,7 @@ package cn.hutool.v7.ai.core;
 import cn.hutool.v7.core.spi.ServiceLoader;
 import cn.hutool.v7.core.spi.SpiUtil;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,7 +37,7 @@ public class AIConfigRegistry {
 	static {
 		final ServiceLoader<AIConfig> loader = SpiUtil.loadList(AIConfig.class);
 		for (final AIConfig config : loader) {
-			configClasses.put(config.getModelName().toLowerCase(), config.getClass());
+			configClasses.put(config.getModelName().toLowerCase(Locale.ROOT), config.getClass());
 		}
 	}
 
@@ -50,6 +51,6 @@ public class AIConfigRegistry {
 		if (modelName == null) {
 			throw new IllegalArgumentException("modelName cannot be null");
 		}
-		return configClasses.get(modelName.toLowerCase());
+		return configClasses.get(modelName.toLowerCase(Locale.ROOT));
 	}
 }

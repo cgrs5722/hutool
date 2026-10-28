@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 条件对象<br>
@@ -569,7 +570,7 @@ public class Condition implements Cloneable, Serializable {
 		}
 
 		// 处理常用符号和IN
-		final String firstPart = strs.get(0).toUpperCase();
+		final String firstPart = strs.get(0).toUpperCase(Locale.ROOT);
 
 		if (OPERATORS.contains(firstPart)) {
 			this.operator = firstPart;

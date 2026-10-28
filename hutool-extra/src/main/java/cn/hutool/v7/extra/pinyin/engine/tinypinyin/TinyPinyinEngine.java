@@ -20,6 +20,8 @@ import cn.hutool.v7.core.text.StrUtil;
 import cn.hutool.v7.extra.pinyin.engine.PinyinEngine;
 import com.github.promeg.pinyinhelper.Pinyin;
 
+import java.util.Locale;
+
 /**
  * 封装了TinyPinyin的引擎。
  *
@@ -64,13 +66,13 @@ public class TinyPinyinEngine implements PinyinEngine {
 		if (!Pinyin.isChinese(c)) {
 			return String.valueOf(c);
 		}
-		return Pinyin.toPinyin(c).toLowerCase();
+		return Pinyin.toPinyin(c).toLowerCase(Locale.ROOT);
 	}
 
 	@Override
 	public String getPinyin(final String str, final String separator, final boolean tone) {
 		final String pinyin = Pinyin.toPinyin(str, separator);
-		return StrUtil.isEmpty(pinyin) ? pinyin : pinyin.toLowerCase();
+		return StrUtil.isEmpty(pinyin) ? pinyin : pinyin.toLowerCase(Locale.ROOT);
 	}
 
 }

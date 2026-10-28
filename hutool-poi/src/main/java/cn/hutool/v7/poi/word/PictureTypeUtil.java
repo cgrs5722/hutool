@@ -16,8 +16,10 @@
 
 package cn.hutool.v7.poi.word;
 
-import org.apache.poi.common.usermodel.PictureType;
 import cn.hutool.v7.core.io.file.FileNameUtil;
+import org.apache.poi.common.usermodel.PictureType;
+
+import java.util.Locale;
 
 /**
  * 图片类型工具类
@@ -34,7 +36,7 @@ public class PictureTypeUtil {
 	 * @return 图片类型枚举
 	 */
 	public static PictureType getType(final String fileName) {
-		String extName = FileNameUtil.extName(fileName).toUpperCase();
+		String extName = FileNameUtil.extName(fileName).toUpperCase(Locale.ROOT);
 		if ("JPG".equals(extName)) {
 			extName = "JPEG";
 		}

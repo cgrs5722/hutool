@@ -20,6 +20,7 @@ import cn.hutool.v7.core.io.file.FileNameUtil;
 import cn.hutool.v7.core.lang.Assert;
 
 import java.net.URL;
+import java.util.Locale;
 
 /**
  * URL协议相关工具类<br>
@@ -125,6 +126,6 @@ public class UrlProtocolUtil {
 	public static boolean isJarFileURL(final URL url) {
 		Assert.notNull(url, "URL must be not null");
 		return (URL_PROTOCOL_FILE.equals(url.getProtocol()) && //
-			url.getPath().toLowerCase().endsWith(FileNameUtil.EXT_JAR));
+			url.getPath().toLowerCase(Locale.ROOT).endsWith(FileNameUtil.EXT_JAR));
 	}
 }
