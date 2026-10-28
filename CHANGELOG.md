@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.49(2026-10-21)
+# 5.8.49(2026-10-28)
 ### 🐣新特性
 * 【core   】      `URLUtil.getJarFile`增加可选使用缓存的版本（pr#4340@Github）
 * 【core   】      `Base85`decode时增加越界检查（pr#4342@Github）
@@ -11,6 +11,7 @@
 * 【core   】      修复`ClassScanner`扫描jar后关闭共享JarFile导致`Zip file closed`的问题（pr#4340@Github）
 * 【core   】      修复`FileMagicNumber` SWF 魔数补齐 ZWS(LZMA 压缩) 签名（pr#1481@Gitee）
 * 【core   】      修复`Base32.decode`单字符输入抛出`ArrayIndexOutOfBoundsException`的问题（pr#4345@Github）
+* 【core   】      修复默认Locale为土耳其语时忽略大小写的Map及Month/Week/ColorUtil名称解析失效的问题（pr#4348@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.48(2026-09-26)
