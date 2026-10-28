@@ -3,6 +3,7 @@ package cn.hutool.core.map;
 import cn.hutool.core.lang.Pair;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -72,5 +73,19 @@ public class CaseInsensitiveMapTest {
 
 			index.getAndIncrement();
 		});
+	}
+
+	@Test
+	public void turkishLocaleTest() {
+		final Locale defaultLocale = Locale.getDefault();
+		Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+		try {
+			final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
+			map.put("ID", "OK");
+			assertEquals("OK", map.get("id"));
+			assertEquals("OK", map.get("Id"));
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
 	}
 }

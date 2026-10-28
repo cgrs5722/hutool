@@ -77,4 +77,15 @@ public class MonthTest {
 		final String displayName = Month.FEBRUARY.getDisplayName(TextStyle.SHORT, Locale.US);
 		Assertions.assertEquals("Feb", displayName);
 	}
+
+	@Test
+	void ofNameTurkishLocaleTest() {
+		final Locale defaultLocale = Locale.getDefault();
+		Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+		try {
+			assertEquals(Month.APRIL, Month.of("april"));
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
+	}
 }

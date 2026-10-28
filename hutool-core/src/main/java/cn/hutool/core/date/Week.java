@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 
 import java.time.DayOfWeek;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * 星期枚举<br>
@@ -198,7 +199,7 @@ public enum Week {
 
 		Week of = of(ArrayUtil.indexOfIgnoreCase(ALIASES, name) + 1);
 		if (null == of) {
-			of = Week.valueOf(name.toUpperCase());
+			of = Week.valueOf(name.toUpperCase(Locale.ROOT));
 		}
 		return of;
 	}

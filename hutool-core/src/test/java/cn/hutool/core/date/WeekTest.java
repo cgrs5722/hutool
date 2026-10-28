@@ -3,6 +3,7 @@ package cn.hutool.core.date;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -82,5 +83,16 @@ public class WeekTest {
 		assertEquals(DayOfWeek.FRIDAY, Week.FRIDAY.toJdkDayOfWeek());
 		assertEquals(DayOfWeek.SATURDAY, Week.SATURDAY.toJdkDayOfWeek());
 		assertEquals(DayOfWeek.SUNDAY, Week.SUNDAY.toJdkDayOfWeek());
+	}
+
+	@Test
+	public void ofNameTurkishLocaleTest() {
+		final Locale defaultLocale = Locale.getDefault();
+		Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+		try {
+			assertEquals(Week.FRIDAY, Week.of("friday"));
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
 	}
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static cn.hutool.core.lang.OptTest.User;
@@ -69,5 +70,18 @@ public class DictTest {
 		dict.setFields(user::getNickname, user::getUsername);
 		assertEquals("hutool", dict.get("username"));
 		assertNull(dict.get("nickname"));
+	}
+
+	@Test
+	public void caseInsensitiveTurkishLocaleTest() {
+		final Locale defaultLocale = Locale.getDefault();
+		Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+		try {
+			final Dict dict = new Dict(true);
+			dict.set("ID", 1);
+			assertEquals(Integer.valueOf(1), dict.getInt("id"));
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
 	}
 }
