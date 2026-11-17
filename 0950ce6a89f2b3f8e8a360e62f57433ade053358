@@ -1,0 +1,22 @@
+hutool-core/src/test/java/cn/hutool/core/codec/Base62Test.java
+  s_e2f494c22389da::t_9544d64fbe3584 50-64
+hutool-core/src/main/java/cn/hutool/core/codec/Base62Codec.java
+  s_e2f494c22389da::t_dc353fa2d12ee5 145,152-158,161-167
+  s_e2f494c22389da::t_b8b874ec1b5504 4,8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "0950ce6a89f2b3f8e8a360e62f57433ade053358",
+  "prompts": {},
+  "sessions": {
+    "s_e2f494c22389da": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "18395d29-73c1-4fca-b6cc-10139cccca88",
+        "model": "glm-5.3"
+      },
+      "human_author": "cgrs5722 <265155194+cgrs5722@users.noreply.github.com>"
+    }
+  }
+}
